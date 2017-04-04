@@ -1,0 +1,7 @@
+#!/usr/bin/with-contenv bash
+
+umask 022
+
+cd /app || exit
+
+exec s6-setuidgid hotio mono --debug Radarr.exe -nobrowser

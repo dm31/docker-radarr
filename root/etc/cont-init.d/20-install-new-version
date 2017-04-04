@@ -1,0 +1,14 @@
+#!/usr/bin/with-contenv bash
+
+if [[ $VERSION != "" ]]; then
+    echo "Installing new Radarr version: $VERSION"
+    rm -rf /app/*
+
+    jobid=$(curl -s "https://ci.appveyor.com/api/projects/galli-leo/radarr-usby1/build/${VERSION}" | jq -r '.build.jobs[0].jobId') && \
+    filename=$(curl -s "https://ci.appveyor.com/api/buildjobs/${jobid}/artifacts" | jq -r '.[0].fileName') && \
+    curl -s -o /tmp/radarr.tar.gz -L "https://ci.appveyor.com/api/buildjobs/${jobid}/artifacts/${filename}" && \
+    tar ixzf /tmp/radarr.tar.gz -C /app --strip-components=1 && \
+
+    rm -rf /tmp/*
+    chown -R hotio:hotio /app
+fi

@@ -1,0 +1,4 @@
+#!/usr/bin/with-contenv bash
+
+# cleanup pid if it exists
+[[ -e /config/Radarr/nzbdrone.pid ]] && rm -rf /config/Radarr/nzbdrone.pid
